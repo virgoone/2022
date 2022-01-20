@@ -1,27 +1,27 @@
 <template>
   <view>
-    <text class="title">{{ getNumbers }}</text>
+    <text class="title">{{ getNumbers.toString() }}</text>
   </view>
 </template>
 
 <script>
-import { computed } from "vue";
-import { useStore } from "vuex";
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
   setup() {
-    const store = useStore();
-    const getNumbers = computed(() => store.getters.getNumbers);
+    const store = useStore()
+    const getNumbers = computed(() => store.getters.getNumbers)
 
     return {
       getNumbers,
-    };
+    }
   },
-};
+}
 </script>
 
 <style>
 .title {
-  font-size: 40px;
+  font-size: 20px;
 }
 </style>

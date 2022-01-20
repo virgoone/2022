@@ -1,7 +1,8 @@
 <template>
   <view class="index">
-    <NumberDisplay/>
-    <NumberSubmit/>
+    <NumberDisplay />
+    <NumberSubmit />
+    <nut-button type="primary">nutui</nut-button>
   </view>
 </template>
 
@@ -13,14 +14,14 @@ export default {
   name: 'Index',
   components: {
     NumberDisplay,
-    NumberSubmit
-  }
+    NumberSubmit,
+  },
 }
 </script>
 
 <style>
 .index {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
