@@ -1,24 +1,20 @@
 <template>
   <view class="home">
     <view class="banner-placeholder" />
-    <Banner />
+    <TopBanner />
     <view class="home-content">
       <HomeCard />
-
-      <view>
-        <NumberDisplay />
-        <NumberSubmit />
-        <nut-button type="primary">nutui</nut-button>
-      </view>
+      <Banner />
+      <News />
     </view>
   </view>
 </template>
 
 <script>
-import NumberDisplay from '../../components/NumberDisplay.vue'
-import NumberSubmit from '../../components/NumberSubmit.vue'
+import TopBanner from './top-banner.vue'
 import Banner from './banner.vue'
 import HomeCard from './home-card.vue'
+import News from './news.vue'
 
 export default {
   name: 'Index',
@@ -28,10 +24,10 @@ export default {
     },
   }),
   components: {
-    NumberDisplay,
-    NumberSubmit,
+    TopBanner,
     Banner,
     HomeCard,
+    News,
   },
 }
 </script>
@@ -41,6 +37,7 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f0f3f5;
 
   .banner-placeholder {
     pointer-events: none;
@@ -49,10 +46,15 @@ export default {
 
   &-content {
     padding-top: 8px;
-    padding-bottom: 50px;
-    padding-bottom: calc(50px + env(safe-area-inset-bottom));
+    padding-bottom: 20px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
     position: relative;
     z-index: 1;
+  }
+  .drive {
+    text-align: center;
+    margin: 16px 0;
+    width: 100%;
   }
 }
 </style>

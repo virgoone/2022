@@ -1,41 +1,25 @@
 <template>
-  <view class="top-banner">
+  <view class="banner">
     <swiper
       :init-page="state.page"
       :loop="true"
       auto-play="3000"
       direction="horizontal"
       :pagination-visible="true"
-      style="height: 100%;"
+      style="height: 100%"
     >
-      <swiper-item>
+      <swiper-item class="banner-item">
         <image
           class="image"
-          src="https://storage.360buyimg.com/jdc-article/NutUItaro34.jpg"
+          src="https://cdn.ugc.marryto.me/2022/banner/WechatIMG238.jpeg?x-oss-process=image/resize,w_750/format,webp"
           alt=""
           mode="widthFix"
         />
       </swiper-item>
-      <swiper-item>
+      <swiper-item class="banner-item">
         <image
           class="image"
-          src="https://storage.360buyimg.com/jdc-article/NutUItaro2.jpg"
-          alt=""
-          mode="widthFix"
-        />
-      </swiper-item>
-      <swiper-item>
-        <image
-          class="image"
-          src="https://storage.360buyimg.com/jdc-article/welcomenutui.jpg"
-          alt=""
-          mode="widthFix"
-        />
-      </swiper-item>
-      <swiper-item>
-        <image
-          class="image"
-          src="https://storage.360buyimg.com/jdc-article/fristfabu.jpg"
+          src="https://cdn.ugc.marryto.me/2022/banner/WechatIMG237.jpeg?x-oss-process=image/resize,w_750/format,webp"
           alt=""
           mode="widthFix"
         />
@@ -55,26 +39,27 @@ export default {
 </script>
 
 <style lang="scss">
-.top-banner {
-  width: 100vw;
-  height: 188px;
-  position: absolute;
-  top: 0;
+.banner {
+  margin: 8px 12px 0 12px;
+  text-align: center;
+  height: 120px;
+  box-shadow: 0 4px 12px 0 rgb(28 32 63 / 8%);
+  overflow: hidden;
 
-  &::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 43px;
-    background: linear-gradient(1turn, #eef1f3, hsla(0, 0%, 100%, 0));
-    z-index: 1;
-    pointer-events: none;
-  }
   .image {
     width: 100%;
     height: 100%;
+  }
+
+  .banner-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
   }
 }
 </style>
