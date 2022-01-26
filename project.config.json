@@ -1,8 +1,9 @@
 {
-  "miniprogramRoot": "./dist",
+  "miniprogramRoot": ".",
+  "cloudfunctionRoot": "./cloud/functions/",
   "projectname": "2022",
   "description": "2022战胜疫情",
-  "appid": "wxf82ff01ef3b1cb8b",
+  "appid": "wx9b2661754310dab0",
   "setting": {
     "urlCheck": false,
     "es6": false,

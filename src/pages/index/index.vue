@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import Taro from '@tarojs/taro'
 import TopBanner from './top-banner.vue'
 import Banner from './banner.vue'
 import HomeCard from './home-card.vue'
@@ -29,6 +30,16 @@ export default {
     HomeCard,
     News,
   },
+  mounted() {
+    Taro.cloud
+      .callFunction({
+        name: 'login',
+        data: {},
+      })
+      .then((res) => {
+        console.log('res', res)
+      })
+  },
 }
 </script>
 
@@ -46,8 +57,8 @@ export default {
 
   &-content {
     padding-top: 8px;
-    padding-bottom: 20px;
-    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    padding-bottom: 10px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
     position: relative;
     z-index: 1;
   }

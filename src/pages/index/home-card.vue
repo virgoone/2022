@@ -36,7 +36,7 @@
       <nut-grid-item>
         <view class="icon">
           <view class="icon-image">
-            <image src="https://cdn.ugc.marryto.me/2022/icon/6.svg" />
+            <image src="https://cdn.ugc.marryto.me/2022/icon/6-2.svg" />
           </view>
           <text class="icon-text">服务中心</text>
         </view>
@@ -68,7 +68,7 @@
       <nut-grid-item>
         <view class="icon">
           <view class="icon-image">
-            <image src="https://cdn.ugc.marryto.me/2022/icon/9.svg" />
+            <image src="https://cdn.ugc.marryto.me/2022/icon/9-1.svg" />
           </view>
           <text class="icon-text">扫一扫</text>
         </view>
@@ -95,9 +95,12 @@ export default {
     border-radius: 12px;
     margin: 0 12px;
     padding: 6px 14px 14px;
-    background-color: #fff;
     overflow: hidden;
     border: 2px solid #fff;
+
+    .nut-grid-item__content {
+      background-color: transparent;
+    }
 
     .icon {
       text-align: center;
