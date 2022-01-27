@@ -29,17 +29,7 @@ export default {
     Banner,
     HomeCard,
     News,
-  },
-  mounted() {
-    Taro.cloud
-      .callFunction({
-        name: 'login',
-        data: {},
-      })
-      .then((res) => {
-        console.log('res', res)
-      })
-  },
+  }
 }
 </script>
 

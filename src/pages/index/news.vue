@@ -1,26 +1,51 @@
 <template>
   <view class="news">
-    <view class="title">通知</view>
-    <view class="content">
-      <view class="item">
-        <view class="link">漯河市关于进一步加强境外入漯返漯人员管理的通告</view>
-      </view>
-      <view class="item">
-        <view class="link">外地返乡人员提前报备通知</view>
-      </view>
-      <view class="item">
-        <view class="link">口罩佩戴最新官方指引</view>
-      </view>
+    <view class="news-title">通知</view>
+    <view class="news-content">
+      <nut-skeleton
+        width="250px"
+        height="22px"
+        :title="false"
+        :loading="loading"
+        animated
+        row="3"
+      >
+        <block :key="item._id" v-for="item in news">
+          <view class="item">
+            <view class="link">{{ item.title }}</view>
+          </view>
+        </block>
+      </nut-skeleton>
     </view>
   </view>
 </template>
 
-<script>
+<script lang="ts">
+import { News, getNews } from '../../api/news'
+
 export default {
+  mounted() {
+    const fields = {
+      _id: true,
+      title: true,
+      order: true,
+      sid: true,
+    } as unknown as Record<keyof News, boolean>
+
+    getNews(fields)
+      .then((data) => {
+        this.news = data
+      })
+      .catch((error) => {
+        console.log('error', error)
+      })
+      .finally(() => {
+        this.loading = false
+      })
+  },
   data: () => ({
-    state: {
-      page: 0,
-    },
+    news: [],
+    loading: true,
   }),
 }
 </script>
@@ -29,18 +54,25 @@ export default {
 .news {
   padding: 15px 16px;
 
-  .title {
+  &-title {
     font-size: 20px;
     font-weight: 600;
     color: #242729;
   }
-  .content {
+  &-content {
     height: 120px;
     background-color: white;
     box-shadow: 0 4px 12px 0 rgb(28 32 63 / 8%);
     border-radius: 12px;
     margin-top: 16px;
     padding: 14px;
+    overflow: hidden;
+
+    .skeleton {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+    }
 
     .item {
       font-size: 14px;

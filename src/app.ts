@@ -9,6 +9,7 @@ import {
   Grid,
   GridItem,
   Skeleton,
+  Avatar,
 } from '@nutui/nutui-taro'
 import Taro from '@tarojs/taro'
 
@@ -21,6 +22,14 @@ import './app.scss'
 const App = createApp({
   onShow(options) {
     Taro.cloud.init({ env: 'production-5gzqzgqif7265fd5', traceUser: true })
+    Taro.cloud
+      .callFunction({
+        name: 'login',
+        data: {},
+      })
+      .then((res) => {
+        console.log('res', res)
+      })
   },
   // 入口组件不需要实现 render 方法，即使实现了也会被 taro 所覆盖
 })
@@ -35,5 +44,6 @@ App.use(store)
   .use(Grid)
   .use(GridItem)
   .use(Skeleton)
+  .use(Avatar)
 
 export default App

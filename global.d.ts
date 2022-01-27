@@ -36,3 +36,27 @@ declare const process: {
     [key: string]: any
   }
 }
+
+declare module 'himalaya' {
+  namespace Himalaya {
+    interface HTMLElement {
+      attributes: {
+        key: string
+        value: string
+      }[]
+      tagName: string
+      type: 'element'
+      children: (Himalaya.HTMLElement | Himalaya.TextElement)[]
+    }
+
+    interface TextElement {
+      content: string
+      type: 'text'
+    }
+  }
+
+  function parse(html: string): Himalaya.HTMLElement[]
+  function stringify(
+    node: (Himalaya.HTMLElement | Himalaya.TextElement)[]
+  ): string
+}
