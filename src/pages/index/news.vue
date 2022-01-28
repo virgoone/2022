@@ -11,7 +11,7 @@
         row="3"
       >
         <block :key="item._id" v-for="item in news">
-          <view class="item">
+          <view class="item" @click="clickToArticle(item)">
             <view class="link">{{ item.title }}</view>
           </view>
         </block>
@@ -21,6 +21,7 @@
 </template>
 
 <script lang="ts">
+import Taro from '@tarojs/taro'
 import { News, getNews } from '../../api/news'
 
 export default {
@@ -42,6 +43,13 @@ export default {
       .finally(() => {
         this.loading = false
       })
+  },
+  methods: {
+    clickToArticle(item: News) {
+      Taro.navigateTo({
+        url: `/pages/article/index?sid=${item.sid}`,
+      })
+    },
   },
   data: () => ({
     news: [],

@@ -10,6 +10,7 @@ import {
   GridItem,
   Skeleton,
   Avatar,
+  Empty,
 } from '@nutui/nutui-taro'
 import Taro from '@tarojs/taro'
 
@@ -45,5 +46,6 @@ App.use(store)
   .use(GridItem)
   .use(Skeleton)
   .use(Avatar)
+  .use(Empty)
 
 export default App

@@ -1,6 +1,6 @@
 <template>
   <view v-if="this.poster" class="poster">
-    <image class="image" src="{{this.poster}}" mode="widthFix" />
+    <image class="image" :src="this.poster" mode="widthFix" />
   </view>
 </template>
 
