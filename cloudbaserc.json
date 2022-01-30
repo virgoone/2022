@@ -1,0 +1,37 @@
+{
+  "version": "2.0",
+  "envId": "{{env.ENV_ID}}",
+  "functionRoot": "./cloud/functions",
+  "functions": [{
+    "name": "wx_sys_info",
+    "timeout": 10,
+    "runtime": "Nodejs10.15",
+    "installDependency": true,
+    "handler": "index.main",
+    "envVariables": {
+      "AMAP_API_KEY": "{{env.AMAP_API_KEY}}",
+      "TEST_KEY": "aaa"
+    },
+    "ignore": [
+      "*.md",
+      "node_modules",
+      "node_modules/**/*"
+    ]
+  },{
+    "name": "wx_address",
+    "timeout": 10,
+    "runtime": "Nodejs12.16",
+    "installDependency": true,
+    "envVariables": {
+      "ENV_ID": "{{env.ENV_ID}}",
+      "AMAP_API_KEY": "{{env.AMAP_API_KEY}}",
+      "TEST_KEY": "aaa"
+    },
+    "handler": "index.main",
+    "ignore": [
+      "*.md",
+      "node_modules",
+      "node_modules/**/*"
+    ]
+  }]
+}

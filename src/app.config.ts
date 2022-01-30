@@ -1,6 +1,6 @@
 export default {
   cloud: true,
-  pages: ['pages/index/index', 'pages/article/index'],
+  pages: ['pages/index/index', 'pages/article/index', 'pages/form/index'],
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',

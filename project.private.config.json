@@ -1,0 +1,32 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "表单页面",
+          "pathName": "pages/form/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "文章页面",
+          "pathName": "pages/article/index",
+          "query": "sid=123",
+          "scene": null,
+          "launchMode": "default"
+        }
+      ]
+    }
+  }
+}

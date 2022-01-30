@@ -11,6 +11,17 @@ import {
   Skeleton,
   Avatar,
   Empty,
+  Form,
+  FormItem,
+  Cell,
+  CellGroup,
+  Checkbox,
+  Address,
+  Elevator,
+  Popup,
+  NoticeBar,
+  Radio,
+  RadioGroup,
 } from '@nutui/nutui-taro'
 import Taro from '@tarojs/taro'
 
@@ -22,7 +33,7 @@ import './app.scss'
 
 const App = createApp({
   onShow(options) {
-    Taro.cloud.init({ env: 'production-5gzqzgqif7265fd5', traceUser: true })
+    // @ts-ignore
     Taro.cloud
       .callFunction({
         name: 'login',
@@ -34,8 +45,7 @@ const App = createApp({
   },
   // 入口组件不需要实现 render 方法，即使实现了也会被 taro 所覆盖
 })
-
-App.use(store)
+  .use(store)
   .use(Button)
   .use(Input)
   .use(Layout)
@@ -47,5 +57,16 @@ App.use(store)
   .use(Skeleton)
   .use(Avatar)
   .use(Empty)
+  .use(Form)
+  .use(FormItem)
+  .use(Cell)
+  .use(CellGroup)
+  .use(Checkbox)
+  .use(Address)
+  .use(Elevator)
+  .use(Popup)
+  .use(NoticeBar)
+  .use(Radio)
+  .use(RadioGroup)
 
 export default App
