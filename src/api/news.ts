@@ -2,6 +2,7 @@ import Taro from '@tarojs/taro'
 
 const db = Taro.cloud.database()
 const news = db.collection('news')
+const _ = db.command
 
 export enum NewsStatus {
   UN_PUBLISHED = 0,
@@ -17,6 +18,7 @@ export interface News {
   subtitle?: string
   content?: string
   status?: NewsStatus
+  view_count?: number
   order: number
 }
 /**

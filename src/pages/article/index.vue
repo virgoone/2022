@@ -50,6 +50,19 @@ export default {
         Taro.setNavigationBarTitle({
           title: this.toastText,
         })
+        setTimeout(() => {
+          Taro.cloud
+            .callFunction({
+              name: 'news',
+              data: { eventName: 'updateViewCount', id: this.news?._id },
+            })
+            .then((data) => {
+              console.log('更新查看数量', data)
+            })
+            .catch((error) => {
+              console.error('更新查看数量', error)
+            })
+        }, 2000)
       })
   },
   data: () => ({

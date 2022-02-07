@@ -22,6 +22,7 @@ import {
   NoticeBar,
   Radio,
   RadioGroup,
+  TextArea,
 } from '@nutui/nutui-taro'
 import Taro from '@tarojs/taro'
 
@@ -68,5 +69,6 @@ const App = createApp({
   .use(NoticeBar)
   .use(Radio)
   .use(RadioGroup)
+  .use(TextArea)
 
 export default App

@@ -60,20 +60,23 @@
       >
         <Address @change="onAddressChange" />
       </nut-form-item>
-      <nut-form-item
-        label="详细住址"
-        prop="detailAddress"
-        required
-        :rules="[{ required: true, message: '请填写来源详细住址' }]"
-      >
-        <input
-          class="nut-input-text"
-          @blur="customBlurValidate('detailAddress')"
-          v-model="formData.name"
-          placeholder="请填写来源详细住址（必填）"
-          type="text"
-        />
-      </nut-form-item>
+      <view class="form-block">
+        <nut-form-item
+          label="详细住址"
+          prop="detailAddress"
+          required
+          :rules="[{ required: true, message: '请填写来源详细住址' }]"
+        >
+          <nut-textarea
+            rows="3"
+            class="textarea"
+            @blur="customBlurValidate('detailAddress')"
+            v-model="formData.name"
+            placeholder="请填写来源详细住址（必填）"
+          />
+        </nut-form-item>
+      </view>
+
       <nut-form-item
         label="返程方式"
         prop="returnWay"
@@ -86,6 +89,64 @@
           </block>
         </nut-radiogroup>
       </nut-form-item>
+      <nut-form-item
+        label="车次/航班/车牌"
+        prop="way"
+        required
+        v-show="formData.returnWay !== '其他'"
+        :rules="[{ required: true, message: '请填写车次/航班/车牌信息' }]"
+      >
+        <input
+          class="nut-input-text"
+          v-model="formData.way"
+          @blur="customBlurValidate('way')"
+          placeholder="请填写车次/航班/车牌信息（必填）"
+          type="text"
+        />
+      </nut-form-item>
+
+      <view class="form-block" v-show="formData.returnWay === '其他'">
+        <nut-form-item
+          label="返程交通方式"
+          prop="wayOther"
+          required
+          :rules="[{ required: true, message: '请填写回乡交通方式' }]"
+        >
+          <nut-textarea
+            rows="3"
+            class="textarea"
+            @blur="customBlurValidate('wayOther')"
+            v-model="formData.wayOther"
+            placeholder="请填写回乡交通方式（必填）"
+          />
+        </nut-form-item>
+      </view>
+
+      <nut-form-item
+        prop="nextAddress"
+        label="到达地区"
+        required
+        class="address-item"
+        :rules="[{ required: true, message: '到达地区' }]"
+      >
+        <Address @change="onNextAddressChange" />
+      </nut-form-item>
+      <view class="form-block">
+        <nut-form-item
+          label="详细居住地址"
+          prop="nextDetailAddress"
+          required
+          :rules="[{ required: true, message: '请填写到达的详细住址' }]"
+        >
+          <nut-textarea
+            rows="3"
+            class="textarea"
+            @blur="customBlurValidate('nextDetailAddress')"
+            v-model="formData.nextDetailAddress"
+            placeholder="请填写到达的详细住址（必填）"
+          />
+        </nut-form-item>
+      </view>
     </nut-form>
     <nut-button
       class="submit-button"
@@ -110,6 +171,10 @@ export default {
       tel: '',
       address: '',
       detailAddress: '',
+      nextAddress: '',
+      nextDetailAddress: '',
+      way: '',
+      wayOther: '',
     })
     const validate = (item: any) => {
       console.log(item)
@@ -184,6 +249,9 @@ export default {
     onAddressChange(value) {
       this.formData.address = value
     },
+    onNextAddressChange(value) {
+      this.formData.nextAddress = value
+    },
   },
 }
 </script>
@@ -191,18 +259,35 @@ export default {
 <style lang="scss">
 .form-page {
   padding: 50px 15px;
-  height: 100vh;
+  min-height: 100vh;
   box-sizing: border-box;
   background: #f7f8fa;
-  padding-bottom: 15px;
   padding-bottom: calc(15px + env(safe-area-inset-bottom));
   position: relative;
+
+  .form-block {
+    .nut-form-item {
+      display: block;
+    }
+
+    .nut-form-item__label {
+      width: 50%;
+    }
+
+    .nut-form-item__body {
+      margin-top: 15px;
+      .textarea {
+        background: #f7f8fa;
+      }
+    }
+  }
 
   .notice-bar {
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
+    z-index: 100;
   }
 
   .nut-form-item__label.required::before,

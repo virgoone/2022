@@ -4,7 +4,7 @@ const db = Taro.cloud.database()
 const banners = db.collection('wx_banners')
 const _ = db.command
 
-export enum BannerPosition {
+export enum BannerCategory {
   Middle = 1,
   Top = 2,
 }
@@ -14,7 +14,7 @@ export interface Banner {
   title: string
   image: string
   link: string
-  position: BannerPosition
+  position: BannerCategory
   order: number
   startTime: Date
   endTime: Date
@@ -24,17 +24,28 @@ export interface Banner {
  * @returns {Promise<Banner[]>}
  */
 export const getBanners = async (
-  position: BannerPosition = 1
+  categoryId: BannerCategory = 1
 ): Promise<Banner[]> => {
   const currentDate = Date.now()
 
   // 取结束时间大于等于当前时间
   const res = await banners
-    .where({
-      position,
-      startTime: _.lte(currentDate),
-      endTime: _.gte(currentDate),
-    })
+    .where(
+      _.and([
+        {
+          category_id: categoryId,
+        },
+        _.or([
+          {
+            startTime: _.lte(currentDate),
+            endTime: _.gte(currentDate),
+          },
+          {
+            status: true,
+          },
+        ]),
+      ])
+    )
     .orderBy('order', 'desc')
     .get()
 
