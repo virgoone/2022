@@ -2,14 +2,14 @@
   <view class="header">
     <nut-skeleton
       width="250px"
-      height="15px"
+      height="24px"
       :title="false"
       :loading="this.loading"
       animated
       row="2"
     >
       <view class="header-title">{{ this.title }}</view>
-      <view class="author-box">
+      <view class="meta-box">
         <view class="author">{{ this.author }}</view>
       </view>
     </nut-skeleton>
@@ -39,25 +39,23 @@ export default {
 .header {
   width: 100%;
   margin: 0 auto;
+  margin-bottom: 20px;
   box-sizing: border-box;
   padding: 0 24px;
 
   &-title {
-    font-weight: 500;
-    line-height: 160%;
     font-size: 22px;
-    margin-bottom: 12px;
+    margin: 0;
+    font-weight: 400;
   }
 
-  .author-box {
+  .meta-box {
     position: relative;
-    padding-right: 100px;
-    margin-bottom: 24px;
+    font-size: 14px;
+    color: #8a8a8a;
 
     .author {
-      font-size: 12px;
       font-weight: 400;
-      line-height: 17px;
     }
   }
 }

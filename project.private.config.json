@@ -22,7 +22,7 @@
         {
           "name": "文章页面",
           "pathName": "pages/article/index",
-          "query": "sid=123",
+          "query": "sid=shows-8284",
           "scene": null,
           "launchMode": "default"
         }

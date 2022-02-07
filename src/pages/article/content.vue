@@ -1,12 +1,12 @@
 <template>
   <view class="article-content">
     <nut-skeleton
-      width="300px"
-      height="15px"
+      width="320px"
+      height="22px"
       :title="false"
-      :loading="this.loading"
+      :loading="loading"
       animated
-      row="6"
+      row="16"
     >
       <block :key="index" v-for="(item, index) in content">
         <rich-text :nodes="item" />
@@ -107,6 +107,22 @@ export default {
 
   font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Hiragino Sans GB,
     Microsoft Yahei, Arial, sans-serif;
+
+  .skeleton .content .blockClass {
+    &:nth-of-type(3n) {
+      margin-bottom: 18px;
+      width: 240px !important;
+    }
+    &:nth-of-type(4n) {
+      margin-bottom: 10px;
+      width: 300px !important;
+    }
+
+    &:nth-of-type(5n) {
+      margin-top: 15px;
+      width: 200px !important;
+    }
+  }
 
   .himalaya-article-parse {
     &-p {
