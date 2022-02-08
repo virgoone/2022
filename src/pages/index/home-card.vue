@@ -1,78 +1,16 @@
 <template>
   <view class="home-card">
     <nut-grid :border="false">
-      <nut-grid-item>
-        <view class="icon">
-          <view class="icon-image">
-            <image src="https://cdn.ugc.marryto.me/2022/icon/1.svg" />
+      <block :key="item.id" v-for="item in menuList">
+        <nut-grid-item @click="onIconClick(item.url)">
+          <view class="icon">
+            <view class="icon-image">
+              <image :src="item.image" aria-label="item.title" />
+            </view>
+            <text class="icon-text">{{item.title}}</text>
           </view>
-          <text class="icon-text">境外返乡人员登记</text>
-        </view>
-      </nut-grid-item>
-      <nut-grid-item @click="onIconClick">
-        <view class="icon">
-          <view class="icon-image">
-            <image src="https://cdn.ugc.marryto.me/2022/icon/2.svg" />
-          </view>
-          <text class="icon-text">境内返乡人员登记</text>
-        </view>
-      </nut-grid-item>
-      <nut-grid-item>
-        <view class="icon">
-          <view class="icon-image">
-            <image src="https://cdn.ugc.marryto.me/2022/icon/3.svg" />
-          </view>
-          <text class="icon-text">紧急疫情排查登记</text>
-        </view>
-      </nut-grid-item>
-      <nut-grid-item>
-        <view class="icon">
-          <view class="icon-image">
-            <image src="https://cdn.ugc.marryto.me/2022/icon/4.svg" />
-          </view>
-          <text class="icon-text">观察监测记录报送</text>
-        </view>
-      </nut-grid-item>
-      <nut-grid-item>
-        <view class="icon">
-          <view class="icon-image">
-            <image src="https://cdn.ugc.marryto.me/2022/icon/6-2.svg" />
-          </view>
-          <text class="icon-text">服务中心</text>
-        </view>
-      </nut-grid-item>
-      <nut-grid-item>
-        <view class="icon">
-          <view class="icon-image">
-            <image src="https://cdn.ugc.marryto.me/2022/icon/5.svg" />
-          </view>
-          <text class="icon-text">村内小事</text>
-        </view>
-      </nut-grid-item>
-      <nut-grid-item>
-        <view class="icon">
-          <view class="icon-image">
-            <image src="https://cdn.ugc.marryto.me/2022/icon/7.svg" />
-          </view>
-          <text class="icon-text">出入登记</text>
-        </view>
-      </nut-grid-item>
-      <nut-grid-item>
-        <view class="icon">
-          <view class="icon-image">
-            <image src="https://cdn.ugc.marryto.me/2022/icon/8.svg" />
-          </view>
-          <text class="icon-text">个人信息</text>
-        </view>
-      </nut-grid-item>
-      <nut-grid-item>
-        <view class="icon">
-          <view class="icon-image">
-            <image src="https://cdn.ugc.marryto.me/2022/icon/9-1.svg" />
-          </view>
-          <text class="icon-text">扫一扫</text>
-        </view>
-      </nut-grid-item>
+        </nut-grid-item>
+      </block>
     </nut-grid>
   </view>
 </template>
@@ -84,11 +22,85 @@ export default {
     state: {
       page: 0,
     },
+    menuList: [
+      {
+        image: 'https://cdn.ugc.marryto.me/2022/icon/1.svg',
+        title: '境外返乡人员登记',
+        url: '',
+        visible: true,
+        sort: 0,
+        id: 1,
+      },
+      {
+        image: 'https://cdn.ugc.marryto.me/2022/icon/2.svg',
+        title: '境内返乡人员登记',
+        url: `/pages/form/index?type=cn`,
+        visible: true,
+        sort: 1,
+        id: 2,
+      },
+      {
+        image: 'https://cdn.ugc.marryto.me/2022/icon/3.svg',
+        title: '紧急疫情排查登记',
+        url: '',
+        visible: true,
+        sort: 2,
+        id: 3,
+      },
+      {
+        image: 'https://cdn.ugc.marryto.me/2022/icon/4.svg',
+        title: '居家监测记录报送',
+        url: '',
+        visible: true,
+        sort: 3,
+        id: 4,
+      },
+      {
+        image: 'https://cdn.ugc.marryto.me/2022/icon/6-2.svg',
+        title: '服务中心',
+        url: '',
+        visible: true,
+        sort: 4,
+        id: 5,
+      },
+      {
+        image: 'https://cdn.ugc.marryto.me/2022/icon/5.svg',
+        title: '村内小事',
+        url: '',
+        visible: true,
+        sort: 5,
+        id: 6,
+      },
+      {
+        image: 'https://cdn.ugc.marryto.me/2022/icon/7.svg',
+        title: '出入登记',
+        url: '',
+        visible: true,
+        sort: 6,
+        id: 7,
+      },
+      {
+        image: 'https://cdn.ugc.marryto.me/2022/icon/8.svg',
+        title: '个人信息',
+        url: '',
+        visible: true,
+        sort: 7,
+        id: 8,
+      },
+      {
+        image: 'https://cdn.ugc.marryto.me/2022/icon/9-1.svg',
+        title: '扫一扫',
+        url: '',
+        visible: true,
+        sort: 8,
+        id: 9,
+      },
+    ],
   }),
   methods: {
-    onIconClick(e) {
+    onIconClick(url: string) {
       Taro.navigateTo({
-        url: `/pages/form/index?type=${e.currentTarget.dataset.type}`,
+        url,
       })
     },
   },
