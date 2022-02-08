@@ -4,13 +4,18 @@
       漯河市新冠肺炎疫情防控指挥部提醒您：
       请据实填报信息，如有不实或错报，后果自负
     </nut-noticebar>
-    <picker class="template_hidden"> </picker>
     <nut-form :model-value="formData" ref="ruleForm">
       <nut-form-item
         label="姓名"
         prop="name"
         required
-        :rules="[{ required: true, message: '请填写姓名' }]"
+        :rules="[
+          { required: true, message: '请填写姓名' },
+          {
+            regex: /(?:[\u4e00-\u9fa5·]{2,16})/,
+            message: '请填写正确的姓名',
+          },
+        ]"
       >
         <input
           class="nut-input-text"
@@ -26,7 +31,7 @@
         required
         :rules="[
           { required: true, message: '请填写手机号' },
-          { validator: asyncValidator, message: '手机号不正确' },
+          { regex: /^\d{11}$/, message: '手机号格式不正确' },
         ]"
       >
         <input
@@ -39,14 +44,21 @@
       </nut-form-item>
       <nut-form-item
         label="身份证号"
-        prop="cardId"
+        prop="idcard"
         required
-        :rules="[{ required: true, message: '请填写身份证号' }]"
+        :rules="[
+          { required: true, message: '请填写身份证号' },
+          {
+            regex:
+              /(^\d{8}(0\d|10|11|12)([0-2]\d|30|31)\d{3}$)|(^\d{6}(18|19|20)\d{2}(0[1-9]|10|11|12)([0-2]\d|30|31)\d{3}(\d|X|x)$)$/,
+            message: '身份证号格式不正确',
+          },
+        ]"
       >
         <input
           class="nut-input-text"
-          v-model="formData.cardId"
-          @blur="customBlurValidate('cardId')"
+          v-model="formData.idcard"
+          @blur="customBlurValidate('idcard')"
           placeholder="请输入身份证号（必填）"
           type="text"
         />
@@ -58,32 +70,38 @@
         class="address-item"
         :rules="[{ required: true, message: '请选择现来源地区' }]"
       >
-        <Address @change="onAddressChange" />
+        <Address
+          :value="formData.address?.addressStr"
+          @change="onAddressChange"
+        />
       </nut-form-item>
       <view class="form-block">
         <nut-form-item
           label="详细住址"
           prop="detailAddress"
           required
-          :rules="[{ required: true, message: '请填写来源详细住址' }]"
+          :rules="[{ required: true, message: '请填写详细住址' }]"
         >
           <nut-textarea
             rows="3"
             class="textarea"
             @blur="customBlurValidate('detailAddress')"
-            v-model="formData.name"
-            placeholder="请填写来源详细住址（必填）"
+            v-model="formData.detailAddress"
+            placeholder="请填写详细住址（必填）"
           />
         </nut-form-item>
       </view>
 
       <nut-form-item
         label="返程方式"
-        prop="returnWay"
+        prop="returnWay.type"
         required
         :rules="[{ required: true, message: '请选择返程方式' }]"
       >
-        <nut-radiogroup direction="horizontal" v-model="formData.returnWay">
+        <nut-radiogroup
+          direction="horizontal"
+          v-model="formData.returnWay.type"
+        >
           <block :key="index" v-for="(item, index) in returnWay.typeData">
             <nut-radio :label="item">{{ item }}</nut-radio>
           </block>
@@ -91,59 +109,88 @@
       </nut-form-item>
       <nut-form-item
         label="车次/航班/车牌"
-        prop="way"
+        prop="returnWay.way"
         required
-        v-show="formData.returnWay !== '其他'"
+        label-width="240rpx"
+        v-show="formData.returnWay.type !== '其他'"
         :rules="[{ required: true, message: '请填写车次/航班/车牌信息' }]"
       >
         <input
           class="nut-input-text"
-          v-model="formData.way"
-          @blur="customBlurValidate('way')"
-          placeholder="请填写车次/航班/车牌信息（必填）"
+          v-model="formData.returnWay.way"
+          @blur="customBlurValidate('formData.returnWay.way')"
+          placeholder="请输入（必填）"
           type="text"
         />
       </nut-form-item>
 
-      <view class="form-block" v-show="formData.returnWay === '其他'">
+      <view class="form-block" v-show="formData.returnWay.type === '其他'">
         <nut-form-item
           label="返程交通方式"
-          prop="wayOther"
+          prop="returnWay.extra"
           required
-          :rules="[{ required: true, message: '请填写回乡交通方式' }]"
+          :rules="[
+            {
+              required: formData.returnWay.type === '其他',
+              message: '请填写回乡交通方式',
+            },
+          ]"
         >
           <nut-textarea
             rows="3"
             class="textarea"
-            @blur="customBlurValidate('wayOther')"
-            v-model="formData.wayOther"
-            placeholder="请填写回乡交通方式（必填）"
+            @blur="customBlurValidate('formData.returnWay.extra')"
+            v-model="formData.returnWay.extra"
+            placeholder="请填写返乡交通方式（必填）"
           />
         </nut-form-item>
       </view>
+      <nut-form-item
+        label="返乡日期"
+        prop="returnWay.date"
+        required
+        :rules="[{ required: true, message: '请选择返乡日期' }]"
+      >
+        <picker
+          mode="date"
+          header-text="请选择返乡日期"
+          :value="formData.returnWay.date"
+          @change="onReturnWayDateChange"
+        >
+          <view
+            class="input-normal"
+            :class="{ active: !!formData.returnWay.date }"
+          >
+            {{ formData.returnWay.date || '请选择返乡日期（必填）' }}
+          </view>
+        </picker>
+      </nut-form-item>
 
       <nut-form-item
         prop="nextAddress"
-        label="到达地区"
+        label="居住地址"
         required
         class="address-item"
-        :rules="[{ required: true, message: '到达地区' }]"
+        :rules="[{ required: true, message: '居住地址' }]"
       >
-        <Address @change="onNextAddressChange" />
+        <Address
+          :value="formData.nextAddress?.addressStr"
+          @change="onNextAddressChange"
+        />
       </nut-form-item>
       <view class="form-block">
         <nut-form-item
           label="详细居住地址"
           prop="nextDetailAddress"
           required
-          :rules="[{ required: true, message: '请填写到达的详细住址' }]"
+          :rules="[{ required: true, message: '请填写详细居住地址' }]"
         >
           <nut-textarea
             rows="3"
             class="textarea"
             @blur="customBlurValidate('nextDetailAddress')"
             v-model="formData.nextDetailAddress"
-            placeholder="请填写到达的详细住址（必填）"
+            placeholder="请填写详细住址（必填）"
           />
         </nut-form-item>
       </view>
@@ -160,6 +207,7 @@
 </template>
 
 <script lang="ts">
+import Taro from '@tarojs/taro'
 import { ref, reactive } from 'vue'
 import Address from './address.vue'
 
@@ -167,28 +215,67 @@ export default {
   setup() {
     const formData = reactive({
       name: '',
-      cardId: '',
+      idcard: '',
       tel: '',
-      address: '',
+      address: {},
       detailAddress: '',
-      nextAddress: '',
+      nextAddress: {},
       nextDetailAddress: '',
-      way: '',
-      wayOther: '',
+      returnWay: {
+        type: '',
+        extra: '',
+        date: '',
+        way: '',
+      },
     })
     const validate = (item: any) => {
       console.log(item)
     }
     const ruleForm = ref<any>(null)
 
-    const submit = () => {
-      ruleForm.value.validate().then(({ valid, errors }: any) => {
-        if (valid) {
-          console.log('success', formData)
-        } else {
-          console.log('error submit!!', errors)
+    const submit = async () => {
+      const { valid, errors } = await ruleForm.value.validate()
+      if (valid) {
+        Taro.showLoading({
+          title: '提交中',
+        })
+        const {
+          address,
+          detailAddress,
+          nextAddress,
+          nextDetailAddress,
+          returnWay,
+          ...extraData
+        } = formData
+        const data = {
+          ...extraData,
+          return_way: returnWay,
+          source_address: {
+            ...address,
+            detailAddress,
+          },
+          next_address: {
+            ...nextAddress,
+            detailAddress: nextDetailAddress,
+          },
         }
-      })
+        const result = await Taro.cloud.callFunction({
+          name: 'wx_form_info',
+          data,
+        })
+        Taro.hideLoading()
+        Taro.showToast({
+          title: '提交成功',
+          icon: 'success',
+          duration: 2000,
+        })
+        console.log('保存提交>>>', result)
+        Taro.reLaunch({
+          url: '/pages/index/index',
+        })
+      } else {
+        console.log('error submit!!', errors)
+      }
     }
     const reset = () => {
       ruleForm.value.reset()
@@ -197,31 +284,16 @@ export default {
     const customBlurValidate = (prop: string) => {
       ruleForm.value.validate(prop).then(({ valid, errors }: any) => {
         if (valid) {
-          console.log('success', formData)
+          console.log('customBlurValidate success', formData)
         } else {
-          console.log('error submit!!', errors)
+          console.log('customBlurValidate error submit!!', errors)
         }
       })
     }
-    // 函数校验
-    const customValidator = (val: string) => /^\d+$/.test(val)
-    // Promise 异步校验
-    const asyncValidator = (val: string) => {
-      return new Promise((resolve) => {
-        console.log('模拟异步验证中...')
-        setTimeout(() => {
-          console.log('模拟异步验证完成')
-          resolve(/^\d{11}$/.test(val))
-        }, 1000)
-      })
-    }
-
     return {
       ruleForm,
       formData,
       validate,
-      customValidator,
-      asyncValidator,
       customBlurValidate,
       submit,
       reset,
@@ -248,9 +320,14 @@ export default {
     },
     onAddressChange(value) {
       this.formData.address = value
+      this.customBlurValidate('address')
     },
     onNextAddressChange(value) {
       this.formData.nextAddress = value
+      this.customBlurValidate('nextAddress')
+    },
+    onReturnWayDateChange(event) {
+      this.formData.returnWay.date = event.detail.value
     },
   },
 }
@@ -264,6 +341,14 @@ export default {
   background: #f7f8fa;
   padding-bottom: calc(15px + env(safe-area-inset-bottom));
   position: relative;
+
+  .input-normal {
+    color: #666;
+
+    &.active {
+      color: #333;
+    }
+  }
 
   .form-block {
     .nut-form-item {

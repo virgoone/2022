@@ -2,11 +2,11 @@
   <view class="article-content">
     <nut-skeleton
       width="320px"
-      height="22px"
+      height="20px"
       :title="false"
       :loading="loading"
       animated
-      row="16"
+      row="13"
     >
       <block :key="index" v-for="(item, index) in content">
         <rich-text :nodes="item" />
@@ -109,6 +109,10 @@ export default {
     Microsoft Yahei, Arial, sans-serif;
 
   .skeleton .content .blockClass {
+    &:nth-of-type(4n),
+    &:first-of-type {
+      margin-left: 15px;
+    }
     &:nth-of-type(3n) {
       margin-bottom: 18px;
       width: 240px !important;

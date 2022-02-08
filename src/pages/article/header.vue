@@ -2,7 +2,7 @@
   <view class="header">
     <nut-skeleton
       width="250px"
-      height="24px"
+      height="20px"
       :title="false"
       :loading="this.loading"
       animated

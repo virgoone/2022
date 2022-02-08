@@ -4,7 +4,7 @@
       class="input-normal"
       :class="{ active: !!state.address }"
       @click="show"
-      >{{ state.address || '请选择地址（必填）' }}</view
+      >{{ state.address || '请选择地区（必填）' }}</view
     >
     <!-- nut-address -->
     <nut-address
@@ -208,9 +208,7 @@ export default {
       }
     },
     onClose({ data }: any) {
-      this.state.address = data.addressStr
       this.selected = data
-      // this.triggerChange({ value: data })
       this.triggerChange(data)
       
     },
@@ -245,7 +243,6 @@ export default {
   watch: {
     value(val = '') {
       this.state.address = val
-      console.log('val', val)
     },
   },
 }

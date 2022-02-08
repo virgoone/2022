@@ -9,7 +9,7 @@
           <text class="icon-text">境外返乡人员登记</text>
         </view>
       </nut-grid-item>
-      <nut-grid-item>
+      <nut-grid-item @click="onIconClick">
         <view class="icon">
           <view class="icon-image">
             <image src="https://cdn.ugc.marryto.me/2022/icon/2.svg" />
@@ -77,13 +77,21 @@
   </view>
 </template>
 
-<script>
+<script lang="ts">
+import Taro from '@tarojs/taro'
 export default {
   data: () => ({
     state: {
       page: 0,
     },
   }),
+  methods: {
+    onIconClick(e) {
+      Taro.navigateTo({
+        url: `/pages/form/index?type=${e.currentTarget.dataset.type}`,
+      })
+    },
+  },
 }
 </script>
 

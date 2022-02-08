@@ -57,10 +57,7 @@ export default {
               data: { eventName: 'updateViewCount', id: this.news?._id },
             })
             .then((data) => {
-              console.log('更新查看数量', data)
-            })
-            .catch((error) => {
-              console.error('更新查看数量', error)
+              console.log('更新查看数量成功', data)
             })
         }, 2000)
       })
