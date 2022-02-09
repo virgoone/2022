@@ -19,12 +19,13 @@
       >
         <block :key="item._id" v-for="item in banners">
           <swiper-item class="banner-item">
-            <image
-              class="image"
-              :src="item.image"
-              :alt="item.title"
-              mode="widthFix"
-            />
+            <view class="image-container">
+              <lark-lazy-image
+                container-class="image-container"
+                :src="item.image"
+                mode="scaleToFill"
+              />
+            </view>
           </swiper-item>
         </block>
       </swiper>
@@ -87,7 +88,7 @@ export default {
     height: 100%;
   }
 
-  .image {
+  .image-container {
     width: 100%;
     height: 100%;
   }

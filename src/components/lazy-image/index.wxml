@@ -1,0 +1,5 @@
+<view class="lazyload-container container-class" style="{{fillingStyle}}">
+  <image style="{{styles}}" class="{{showed ? 'loaded': ''}} image image-class" src="{{image}}"
+    mode="{{mode}}" webp="{{webp}}" show-menu-by-longpress="{{showMenuByLongpress}}" bindload="onLoad"
+    binderror="onError" />
+</view>

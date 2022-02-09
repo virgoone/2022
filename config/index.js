@@ -16,7 +16,21 @@ const config = {
   },
   sourceRoot: 'src',
   outputRoot: 'dist',
-  plugins: ['@tarojs/plugin-html'],
+  plugins: [
+    '@tarojs/plugin-html',
+    [
+      '@tarojs/plugin-framework-vue3',
+      {
+        mini: {
+          compilerOptions: {
+            isCustomElement: (tag) => tag.startsWith('lark-'),
+            whitespace: 'preserve',
+            // ...
+          },
+        },
+      },
+    ],
+  ],
   defineConstants: {},
   copy: {
     patterns: [],

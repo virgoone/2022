@@ -2,12 +2,14 @@
   <view class="home-card">
     <nut-grid :border="false">
       <block :key="item.id" v-for="item in menuList">
-        <nut-grid-item @click="onIconClick(item.url)">
+        <nut-grid-item @click="onIconClick(item)">
           <view class="icon">
             <view class="icon-image">
-              <image :src="item.image" aria-label="item.title" />
+              <image :src="item.image" :aria-label="item.title" />
             </view>
-            <text class="icon-text">{{item.title}}</text>
+            <text class="icon-text" :aria-label="item.title">
+              {{ item.title }}
+            </text>
           </view>
         </nut-grid-item>
       </block>
@@ -98,7 +100,11 @@ export default {
     ],
   }),
   methods: {
-    onIconClick(url: string) {
+    onIconClick(item: any) {
+      const { url } = item
+      if (!url) {
+        return
+      }
       Taro.navigateTo({
         url,
       })

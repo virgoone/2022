@@ -1,10 +1,9 @@
 <template>
   <view class="top-banner">
-    <image
-      class="image"
-      src="https://s3.bmp.ovh/imgs/2022/01/35f7f3ec144d82e7.png"
-      alt=""
+    <lark-lazy-image
+      container-class="image-container"
       mode="aspectFill"
+      src="https://s3.bmp.ovh/imgs/2022/01/35f7f3ec144d82e7.png"
     />
     <!-- <view class="tag">广告</view> -->
   </view>
@@ -39,7 +38,7 @@ export default {
     pointer-events: none;
   }
 
-  .image {
+  .image-container {
     width: 100%;
     height: 100%;
   }

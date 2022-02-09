@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Taro from '@tarojs/taro'
+import Taro, { findDOMNode } from '@tarojs/taro'
 import TopBanner from './top-banner.vue'
 import Banner from './banner.vue'
 import HomeCard from './home-card.vue'
@@ -29,7 +29,7 @@ export default {
     Banner,
     HomeCard,
     News,
-  }
+  },
 }
 </script>
 
