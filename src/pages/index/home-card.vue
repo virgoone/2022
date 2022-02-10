@@ -51,8 +51,8 @@ export default {
       },
       {
         image: 'https://cdn.ugc.marryto.me/2022/icon/4.svg',
-        title: '居家监测记录报送',
-        url: '',
+        title: '居家健康监测记录',
+        url: '/pages/health/form/index',
         visible: true,
         sort: 3,
         id: 4,
@@ -106,7 +106,7 @@ export default {
         return
       }
       Taro.navigateTo({
-        url,
+        url: url.indexOf('?') > -1 ? `${url}&source=home` : `${url}?source=home`,
       })
     },
   },

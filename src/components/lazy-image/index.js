@@ -3,11 +3,12 @@ const supportObserver = !!wx.createIntersectionObserver
 Component({
   data: {
     showed: false,
+    loaded: false,
+    error: false,
     filling: false,
     fillingStyle: '',
     image:
       'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==',
-    errorImage: '',
   },
   options: {
     // addGlobalClass: true,
@@ -36,6 +37,10 @@ Component({
       type: String,
       value:
         'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==',
+    },
+    errorImage: {
+      type: String,
+      value: '',
     },
     mode: {
       type: String,
@@ -73,11 +78,18 @@ Component({
       this.observer = null
     },
     onError(e) {
+      const state = {
+        loaded: true,
+        error: true,
+        image: this.data.errorImage || this.data.src,
+      }
+      this.setData(state)
       this.triggerEvent('error', {
         detail: e.detail,
       })
     },
     onLoad(e) {
+      this.setData({ loaded: true })
       this.triggerEvent('load', {
         detail: e.detail,
       })
@@ -89,7 +101,6 @@ Component({
           showed: true,
         })
       }
-      console.log('this2.', this.observer || this.data.showed)
 
       if (this.observer || this.data.showed) {
         return
@@ -107,7 +118,6 @@ Component({
         observer
           .relativeToViewport(this.properties.viewport)
           .observe('.lazyload-container', () => {
-            console.log('this.', this.data)
             this.setData({
               showed: true,
               image: this.data.src,

@@ -232,7 +232,9 @@ export default {
       console.log(item)
     }
     const ruleForm = ref<any>(null)
-
+    const reset = () => {
+      ruleForm.value.reset()
+    }
     const submit = async () => {
       const { valid, errors } = await ruleForm.value.validate()
       if (valid) {
@@ -270,6 +272,7 @@ export default {
           duration: 2000,
         })
         console.log('保存提交>>>', result)
+        reset()
         Taro.reLaunch({
           url: '/pages/index/index',
         })
@@ -277,9 +280,7 @@ export default {
         console.log('error submit!!', errors)
       }
     }
-    const reset = () => {
-      ruleForm.value.reset()
-    }
+
     // 失去焦点校验
     const customBlurValidate = (prop: string) => {
       ruleForm.value.validate(prop).then(({ valid, errors }: any) => {
@@ -341,7 +342,9 @@ export default {
   background: #f7f8fa;
   padding-bottom: calc(15px + env(safe-area-inset-bottom));
   position: relative;
-
+  .nut-button--round {
+    border-radius: 6px;
+  }
   .input-normal {
     color: #666;
 

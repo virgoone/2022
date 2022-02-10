@@ -16,6 +16,7 @@ import {
   Cell,
   CellGroup,
   Checkbox,
+  CheckboxGroup,
   Address,
   Elevator,
   Popup,
@@ -63,6 +64,7 @@ const App = createApp({
   .use(Cell)
   .use(CellGroup)
   .use(Checkbox)
+  .use(CheckboxGroup)
   .use(Address)
   .use(Elevator)
   .use(Popup)
