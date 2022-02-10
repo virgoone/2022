@@ -273,9 +273,11 @@ export default {
         })
         console.log('保存提交>>>', result)
         reset()
-        Taro.reLaunch({
-          url: '/pages/index/index',
-        })
+        setTimeout(() => {
+          Taro.reLaunch({
+            url: '/pages/index/index',
+          })
+        }, 2000)
       } else {
         console.log('error submit!!', errors)
       }

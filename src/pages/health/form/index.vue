@@ -61,8 +61,6 @@
 import Taro from '@tarojs/taro'
 import { ref, reactive } from 'vue'
 
-const forceOption = '无上述异常症状'
-
 export default {
   data: () => ({
     healthData: [
@@ -109,9 +107,11 @@ export default {
         })
         console.log('保存提交>>>', result)
         reset()
-        Taro.reLaunch({
-          url: '/pages/index/index',
-        })
+        setTimeout(() => {
+          Taro.reLaunch({
+            url: '/pages/index/index',
+          })
+        }, 2000)
       } else {
         console.log('error submit!!', errors)
       }
@@ -147,6 +147,10 @@ page {
   }
   .nut-form-item.error.line::before {
     border-bottom-color: #fa2c19;
+  }
+  .nut-form-item__body__slots .nut-input-text,
+  .nut-input-text {
+    color: #000;
   }
 
   .form-block {
