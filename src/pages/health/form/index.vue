@@ -60,6 +60,7 @@
 <script lang="ts">
 import Taro from '@tarojs/taro'
 import { ref, reactive } from 'vue'
+import { saveFormInfo } from '../../../api/health'
 
 export default {
   data: () => ({
@@ -92,13 +93,12 @@ export default {
         })
         const { temperature, health_status } = formData
         const data = {
-          temperature,
+          temperature: parseFloat(temperature),
           health_status,
+          _createTime: Date.now(),
+          _updateTime: Date.now(),
         }
-        const result = await Taro.cloud.callFunction({
-          name: 'wx_form_health',
-          data,
-        })
+        const result = await saveFormInfo(data as any)
         Taro.hideLoading()
         Taro.showToast({
           title: '提交成功',

@@ -8,6 +8,7 @@ export enum NewsStatus {
   UN_PUBLISHED = 0,
   DELETED,
   PUBLISHED,
+  PRIVATE,
 }
 
 export interface News {
@@ -48,7 +49,6 @@ export const getNews = async (
 export const getNewsBySid = async (sid: string): Promise<News> => {
   const newsQuery = await news
     .where({
-      status: NewsStatus.PUBLISHED,
       sid,
     })
     .limit(1)

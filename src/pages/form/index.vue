@@ -195,14 +195,26 @@
         </nut-form-item>
       </view>
     </nut-form>
-    <nut-button
-      class="submit-button"
-      type="primary"
-      size="large"
-      @click="submit"
-      block
-      >提交申报</nut-button
-    >
+    <view class="fixed-footer">
+      <view class="terms-policy">
+        <checkbox-group @change="onAgreeChange">
+          <checkbox :checked="formData.agree"> </checkbox>
+        </checkbox-group>
+
+        我已阅读并同意
+        <view class="link" @click="onTermsClick('terms')"> 《服务政策》 </view>
+        和
+        <view class="link" @click="onTermsClick('policy')"> 《用户协议》 </view>
+      </view>
+      <nut-button
+        class="submit-button"
+        type="primary"
+        size="large"
+        @click="submit"
+        block
+        >提交申报</nut-button
+      >
+    </view>
   </view>
 </template>
 
@@ -210,6 +222,7 @@
 import Taro from '@tarojs/taro'
 import { ref, reactive } from 'vue'
 import Address from './address.vue'
+import { saveFormInfo } from '../../api/form-info'
 
 export default {
   setup() {
@@ -221,6 +234,7 @@ export default {
       detailAddress: '',
       nextAddress: {},
       nextDetailAddress: '',
+      agree: false,
       returnWay: {
         type: '',
         extra: '',
@@ -237,7 +251,15 @@ export default {
     }
     const submit = async () => {
       const { valid, errors } = await ruleForm.value.validate()
+
       if (valid) {
+        if (!formData.agree) {
+          Taro.showToast({
+            title: '请阅读并同意《服务政策》和《用户协议》',
+            icon: 'none',
+          })
+          return
+        }
         Taro.showLoading({
           title: '提交中',
         })
@@ -260,11 +282,10 @@ export default {
             ...nextAddress,
             detailAddress: nextDetailAddress,
           },
+          _createTime: Date.now(),
+          _updateTime: Date.now(),
         }
-        const result = await Taro.cloud.callFunction({
-          name: 'wx_form_info',
-          data,
-        })
+        const result = await saveFormInfo(data as any)
         Taro.hideLoading()
         Taro.showToast({
           title: '提交成功',
@@ -279,6 +300,10 @@ export default {
           })
         }, 2000)
       } else {
+        Taro.showToast({
+          title: '请检查必填项',
+          icon: 'none',
+        })
         console.log('error submit!!', errors)
       }
     }
@@ -293,6 +318,11 @@ export default {
         }
       })
     }
+    const onAgreeChange = (e) => {
+      console.log('e.detail.value', e.detail.value)
+      formData.agree = e.detail.value?.length > 0 ? true : false
+    }
+
     return {
       ruleForm,
       formData,
@@ -300,6 +330,7 @@ export default {
       customBlurValidate,
       submit,
       reset,
+      onAgreeChange,
     }
   },
   data() {
@@ -314,6 +345,11 @@ export default {
     Address,
   },
   methods: {
+    onTermsClick(type: string) {
+      Taro.navigateTo({
+        url: `/pages/article/index?sid=${type}`,
+      })
+    },
     openReturnWayPicker() {
       this.returnWay.show = true
     },
@@ -342,8 +378,47 @@ export default {
   min-height: 100vh;
   box-sizing: border-box;
   background: #f7f8fa;
-  padding-bottom: calc(15px + env(safe-area-inset-bottom));
+  padding-bottom: 100px;
+  padding-bottom: calc(100px + env(safe-area-inset-bottom));
   position: relative;
+
+  .fixed-footer {
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    background: #fff;
+    box-sizing: border-box;
+    padding: 20px 15px;
+    padding-bottom: calc(env(safe-area-inset-bottom));
+
+    .terms-policy {
+      font-size: 12px;
+      color: #94949e;
+      letter-spacing: 0;
+      display: flex;
+      margin-bottom: 12px;
+      height: 20px;
+      align-items: center;
+
+      .wx-checkbox-input {
+        width: 12px;
+        height: 12px;
+        margin: 0;
+        padding: 0;
+        margin-right: 5px;
+      }
+
+      .link {
+        color: #498bf7;
+        text-decoration: underline;
+        &:hover {
+          color: #333;
+        }
+      }
+    }
+  }
   .nut-button--round {
     border-radius: 6px;
   }
@@ -393,9 +468,6 @@ export default {
   .nut-form-item__body__slots .nut-input-text,
   .nut-input-text {
     color: #000;
-  }
-  .submit-button {
-    margin-top: 20px;
   }
   .template_hidden {
     display: none;

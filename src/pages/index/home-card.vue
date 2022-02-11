@@ -29,7 +29,7 @@ export default {
         image: 'https://cdn.ugc.marryto.me/2022/icon/1.svg',
         title: '境外返乡人员登记',
         url: '',
-        visible: true,
+        visible: false,
         sort: 0,
         id: 1,
       },
@@ -45,7 +45,7 @@ export default {
         image: 'https://cdn.ugc.marryto.me/2022/icon/3.svg',
         title: '紧急疫情排查登记',
         url: '',
-        visible: true,
+        visible: false,
         sort: 2,
         id: 3,
       },
@@ -61,7 +61,7 @@ export default {
         image: 'https://cdn.ugc.marryto.me/2022/icon/6-2.svg',
         title: '服务中心',
         url: '',
-        visible: true,
+        visible: false,
         sort: 4,
         id: 5,
       },
@@ -69,7 +69,7 @@ export default {
         image: 'https://cdn.ugc.marryto.me/2022/icon/5.svg',
         title: '村内小事',
         url: '',
-        visible: true,
+        visible: false,
         sort: 5,
         id: 6,
       },
@@ -77,7 +77,7 @@ export default {
         image: 'https://cdn.ugc.marryto.me/2022/icon/7.svg',
         title: '出入登记',
         url: '',
-        visible: true,
+        visible: false,
         sort: 6,
         id: 7,
       },
@@ -85,7 +85,7 @@ export default {
         image: 'https://cdn.ugc.marryto.me/2022/icon/8.svg',
         title: '个人信息',
         url: '',
-        visible: true,
+        visible: false,
         sort: 7,
         id: 8,
       },
@@ -93,20 +93,25 @@ export default {
         image: 'https://cdn.ugc.marryto.me/2022/icon/9-1.svg',
         title: '扫一扫',
         url: '',
-        visible: true,
+        visible: false,
         sort: 8,
         id: 9,
       },
-    ],
+    ].filter((item) => item.visible),
   }),
   methods: {
     onIconClick(item: any) {
       const { url } = item
       if (!url) {
+        Taro.showToast({
+          title: '开发中，敬请期待～',
+          icon: 'none',
+        })
         return
       }
       Taro.navigateTo({
-        url: url.indexOf('?') > -1 ? `${url}&source=home` : `${url}?source=home`,
+        url:
+          url.indexOf('?') > -1 ? `${url}&source=home` : `${url}?source=home`,
       })
     },
   },

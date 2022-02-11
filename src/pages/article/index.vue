@@ -18,8 +18,8 @@ import Taro, { useRouter } from '@tarojs/taro'
 import { getNewsBySid } from '../../api/news'
 
 import Poster from './poster.vue'
-import Content from './content.vue'
 import Header from './header.vue'
+import Content from '../../components/article-render/index.vue'
 
 export default {
   name: 'Article',

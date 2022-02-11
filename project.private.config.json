@@ -22,16 +22,16 @@
         {
           "name": "文章页面",
           "pathName": "pages/article/index",
-          "query": "sid=shows-8284",
-          "launchMode": "default",
-          "scene": null
+          "query": "sid=terms",
+          "scene": null,
+          "launchMode": "default"
         },
         {
           "name": "健康记录申报",
           "pathName": "pages/health/form/index",
           "query": "",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
