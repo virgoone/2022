@@ -43,27 +43,6 @@
         />
       </nut-form-item>
       <nut-form-item
-        label="身份证号"
-        prop="idcard"
-        required
-        :rules="[
-          { required: true, message: '请填写身份证号' },
-          {
-            regex:
-              /(^\d{8}(0\d|10|11|12)([0-2]\d|30|31)\d{3}$)|(^\d{6}(18|19|20)\d{2}(0[1-9]|10|11|12)([0-2]\d|30|31)\d{3}(\d|X|x)$)$/,
-            message: '身份证号格式不正确',
-          },
-        ]"
-      >
-        <input
-          class="nut-input-text"
-          v-model="formData.idcard"
-          @blur="customBlurValidate('idcard')"
-          placeholder="请输入身份证号（必填）"
-          type="text"
-        />
-      </nut-form-item>
-      <nut-form-item
         prop="address"
         label="来源地区"
         required
@@ -228,7 +207,6 @@ export default {
   setup() {
     const formData = reactive({
       name: '',
-      idcard: '',
       tel: '',
       address: {},
       detailAddress: '',
