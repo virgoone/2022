@@ -37,7 +37,17 @@ const config = {
     options: {},
   },
   framework: 'vue3',
+  compiler: {
+    type: 'webpack5',
+    prebundle: {
+      // enable: false,
+    },
+  },
   mini: {
+    miniCssExtractPluginOption: {
+      //忽略css文件引入顺序
+      ignoreOrder: true,
+    },
     postcss: {
       pxtransform: {
         enable: true,

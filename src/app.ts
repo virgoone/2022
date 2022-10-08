@@ -34,6 +34,7 @@ import './app.scss'
 const App = createApp({
   onShow(options) {
     // @ts-ignore
+    Taro.cloud.init({ env: 'production-5gzqzgqif7265fd5', traceUser: true })
     Taro.cloud
       .callFunction({
         name: 'login',
